@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
+from django.http import HttpResponse
 def _cart_id(request):
     cart = request.session.session_key
     if not cart:
@@ -12,6 +13,11 @@ def _cart_id(request):
     return cart
     
 def add_cart(request,product_id):
+    if request.method == 'POST':
+        color = request.POST['color']
+        size = request.POST['size']
+        print(color, size)
+
     product = Product.objects.get(id=product_id)
     try:
         cart = Cart.objects.get(cart_id=_cart_id(request)) 
